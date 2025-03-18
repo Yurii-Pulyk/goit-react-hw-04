@@ -18,6 +18,7 @@ export default function App() {
     setPage(1);
     setImages([]);
   };
+  function handleImageClick(image) {}
 
   useEffect(() => {
     if (searchTerm === '') return;
@@ -45,7 +46,9 @@ export default function App() {
       <SearchForm onSearch={handleSearch} />
 
       {error && <b>Woops there was an error plz reload...</b>}
-      {images.length > 0 && <ImageGallery images={images} />}
+      {images.length > 0 && (
+        <ImageGallery images={images} onImageClick={handleImageClick} />
+      )}
 
       {loading && <b>Loading data, please wait...</b>}
 
