@@ -45,7 +45,10 @@ export default function App() {
     <>
       <SearchForm onSearch={handleSearch} />
 
-      {error && <b>Woops there was an error plz reload...</b>}
+      {error && (
+        <ErrorMessage message="Woops there was an error plz reload..." />
+      )}
+      {loading && <Loader />}
       {images.length > 0 && (
         <ImageGallery images={images} onImageClick={handleImageClick} />
       )}
@@ -53,9 +56,7 @@ export default function App() {
       {loading && <b>Loading data, please wait...</b>}
 
       {images.length > 0 && !loading && (
-        <button onClick={() => setPage(page + 1)}>
-          Load more images {page}
-        </button>
+        <button onClick={() => setPage(page + 1)}>Load more {page}</button>
       )}
       <Toaster />
     </>
