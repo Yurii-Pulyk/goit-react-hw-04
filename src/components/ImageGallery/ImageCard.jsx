@@ -1,12 +1,8 @@
-export default function ImageCard({ image, onImageClick }) {
+export default function ImageCard({ photo, onImageClick }) {
+  const { urls, alt_description } = photo;
   return (
-    <div>
-      <img
-        src={image.urls.small}
-        alt={image.alt_description}
-        onClick={onImageClick}
-        style={{ cursor: 'poiner' }}
-      />
+    <div onClick={() => onImageClick(photo)}>
+      <img src={urls.small} alt={alt_description} />
     </div>
   );
 }

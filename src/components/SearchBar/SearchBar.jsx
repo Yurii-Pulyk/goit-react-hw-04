@@ -1,34 +1,25 @@
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { toast } from 'react-hot-toast';
-const validationSchema = Yup.object({
-  topic: Yup.string()
-    .trim()
-    .min(1, 'Поле не може бути порожнім')
-    .required('Введіть пошуковий запит'),
-});
+import { Formik, Form, Field } from 'formik';
+import toast from 'react-hot-toast';
 
-export default function SearchForm({ onSearch }) {
+export default function SearchBar({ onSubmit, initialQuery }) {
   return (
     <Formik
-      initialValues={{ topic: '' }}
-      validationSchema={validationSchema}
+      initialValues={{ query: initialQuery || '' }}
       onSubmit={(values, actions) => {
-        if (!values.topic.trim()) {
-          toast.error('Введіть пошуковий запит!');
+        if (!values.query.trim()) {
+          toast.error('Please enter a search query!');
+
           return;
         }
-        onSearch(values.topic);
-        actions.resetForm();
+
+        onSubmit(values.query);
+        actions.resetForm({ values: { query: values.query } });
       }}
     >
-      {({ errors, touched }) => (
-        <Form>
-          <Field type="text" name="topic" />
-          <ErrorMessage name="topic" component="div" />
-          <button type="submit">Search</button>
-        </Form>
-      )}
+      <Form>
+        <Field type="text" name="query" />
+        <button type="submit">Search</button>
+      </Form>
     </Formik>
   );
 }
